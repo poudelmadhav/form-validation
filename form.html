@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form Validation Js</title>
+	<link rel="stylesheet" type="text/css" href="bootstrap.css">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6 offset-sm-3 border border-info mt-5">
+				<h3 class="border-bottom border-info mt-3 pt-3 pb-3 progress-bar">Please enter details:</h3>
+				<form onsubmit="return validate();" name="registrationForm" action="fun.html" method="post">
+					<div class="form-group mt-4">
+						<label for="name">Name</label>
+						<input type="text" name="name" id="name" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="address">Address</label>
+						<input type="text" name="address" id="address" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input type="email" name="email" id="email" class="form-control">
+					</div>
+					<!-- <button onclick="validate();">Bishesh</button> -->
+					<div class="form-group">
+						<input type="submit" name="submit" value="Submit" class="btn btn-info">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		function checkValue(ele, msg) {
+			if (ele.nextSibling) {
+				ele.nextSibling.remove();
+			}
+			if (ele.value === "") {
+				console.log(false);
+				// alert('Please enter ' + msg);
+				ele.classList.add('is-invalid'); // ele.style.border = '1px solid red';
+				let span = document.createElement("span");
+				span.style.color = 'red';
+				span.textContent = 'This field cannot be empty. Please enter '+ msg + '.';
+				ele.parentNode.appendChild(span);
+				return false;
+			}
+			else {
+				console.log(true);
+				ele.classList.remove('is-invalid'); // ele.style.border = '1px solid grey';
+				return true;
+			}
+		}
+		function validate() {
+			let name = document.querySelector('#name');
+			let address = document.querySelector('#address');
+			let email = document.querySelector('#email');
+
+			// let isValid = true;
+			let validName = checkValue(name, 'name');
+			// console.log('name'+isValid);
+			let validAddress = checkValue(address, 'address');
+			// console.log('address'+isValid);
+			let validEmail = checkValue(email, 'email');
+			// console.log('email'+isValid);
+
+			
+			if (validName && validAddress && validEmail) {
+				setCookie();
+				return true;
+			} else {
+				return false;
+			}
+		}
+		function setCookie() {
+			let name = document.querySelector('#name').value;
+			let address = document.querySelector('#address').value;
+			let email = document.querySelector('#email').value;
+			document.cookie = "yourname=" + name +";path=/;"+"expires=Thu, 11 Oct 2018 17:04:30 +0545";
+			document.cookie = "youraddress=" + address + ";path=/;"+"expires=Thu, 11 Oct 2018 17:04:30 +0545";
+			document.cookie = "youremail=" + email + ";path=/;"+"expires=Thu, 11 Oct 2018 17:04:30 +0545";
+		}
+	</script>
+</body>
+</html>
